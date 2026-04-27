@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 
   getAllProducts(page: number, limit: number) {
     return this.http.get(
-      `https://api.everrest.educata.dev/shop/products/all?page=${page}&page_size=${limit}`
+      `https://api.everrest.educata.dev/shop/products/all?page_index=${page}&page_size=${limit}`
     );
   }
 }

@@ -16,31 +16,26 @@ export class Allproduct {
   public totalPages: number = 0;
   public limit: number = 9;
 
-  constructor(public tools: ToolsService) {
-    this.loadProducts(1);
-  }
+  constructor(private toolsService: ToolsService) {}
 
-  onLimitChange() {
-    this.currentPage = 1;
-    this.loadProducts(this.currentPage);
-  }
-
-loadProducts(page: number) {
+  loadProducts(page: number = 1) {
   this.currentPage = page;
 
-  this.tools.getAllProducts(this.currentPage, this.limit)
-    .subscribe((Data: any) => {
-      console.log(Data);
-
-      this.allProducts = Data.products;
-      this.totalPages = Math.ceil(Data.total / this.limit);
-    });
+  this.toolsService.getAllProducts(page, this.limit).subscribe((res: any) => {
+    this.allProducts = res.products;
+    this.totalPages = Math.ceil(res.total / this.limit);
+  });
 }
 
-  getPages(): number[] {
-    return Array.from(
-      { length: this.totalPages },
-      (_, i) => i + 1
-    );
-  }
+getPages(): number[] {
+  return Array.from(
+    { length: this.totalPages },
+    (_, i) => i + 1
+  );
+}
+
+onLimitChange() {
+  this.currentPage = 1;
+  this.loadProducts(1);
+}
 }

@@ -3,40 +3,48 @@
         @for (item of allProducts; track item._id) {
         <div class="card-item">
             <div class="badge-price">
-                {{item.price.current}}$
+                {{ item.price.current }}$
                 @if (item.price.beforeDiscount) {
-                <span class="discount">{{item.price.beforeDiscount}}$</span>
+                <span class="discount">
+                    {{ item.price.beforeDiscount }}$
+                </span>
                 }
             </div>
-
             <img [src]="item.thumbnail" class="main-img" referrerpolicy="no-referrer">
 
-            <div class="status-tag">In Stock: {{item.stock}}</div>
+            <div class="status-tag">
+                In Stock: {{ item.stock }}
+            </div>
 
-            <h4 class="title">{{item.title}}</h4>
+            <h4 class="title">
+                {{ item.title }}
+            </h4>
 
-            <div class="rating">⭐⭐⭐⭐⭐</div>
+            <div class="rating">
+                {{ '⭐'.repeat(item.rating) }}
+            </div>
 
-            <button class="buy-btn">ADD TO CART</button>
+            <button class="buy-btn">
+                ADD TO CART
+            </button>
         </div>
         }
     </div>
-
     <div class="pagination-footer">
         <div class="pill-nav">
             @for (page of getPages(); track page) {
             <button class="num-btn" [class.active]="page === currentPage" (click)="loadProducts(page)">
-                {{page}}
+                {{ page }}
             </button>
             }
         </div>
         <div class="selector-box">
-            Items per Page:
-
+            <span>Items per Page:</span>
             <select [(ngModel)]="limit" (change)="onLimitChange()">
-                <option [value]="9">18</option>
-                <option [value]="18">9</option>
+                <option [value]="9">9</option>
+                <option [value]="18">18</option>
             </select>
         </div>
+
     </div>
 </div>

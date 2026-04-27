@@ -1,32 +1,64 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectorRef
+} from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { ToolsService } from '../../services/tools-service';
 
 @Component({
   selector: 'app-main',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './main.html',
   styleUrls: ['./main.css']
 })
 export class Main implements OnInit, OnDestroy {
+
   images: string[] = [
     'images/1.avif',
-    'images/2.avif'
+    'images/2.avif',
+    'images/3.avif'
   ];
-  currentIndex:number = 0;
-  intervalId:any;
 
-  ngOnInit(): void{
-    this.intervalId=setInterval(()=>{
-      this.nextImage();
-    },4000);
+  currentImage: number = 0;
+  interval: any;
+  bestSellers: any[] = [];
+
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private toolsService: ToolsService
+  ) {}
+
+  ngOnInit(): void {
+    this.startSlider();
+    this.getBestSellers();
   }
-  nextImage():void{
-    this.currentIndex = (this.currentIndex + 1)% this.images.length;
+
+  startSlider(): void {
+    this.interval = setInterval(() => {
+      this.currentImage =
+        (this.currentImage + 1) % this.images.length;
+
+      this.cdr.detectChanges();
+    }, 4000);
   }
+
+  getBestSellers(): void {
+    this.toolsService.getAllProducts(1, 50).subscribe((res: any) => {
+      this.bestSellers = res.products
+        .sort((a: any, b: any) => b.rating - a.rating)
+        .slice(0, 6)
+        .map((item: any) => ({
+          ...item,
+          rating: Math.round(item.rating)
+        }));
+    });
+  }
+
   ngOnDestroy(): void {
-    if(this.intervalId){
-      clearInterval(this.intervalId)
-    }
+    clearInterval(this.interval);
   }
 }
