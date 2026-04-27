@@ -1,0 +1,131 @@
+.shop-wrapper {
+    padding: 30px;
+    background-color: #fcfcfc;
+}
+
+.products-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.card-item {
+    background: #fff;
+    border-radius: 18px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04);
+    position: relative;
+    border: 1px solid #f0f0f0;
+}
+
+.badge-price {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #1a1a1a;
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.discount {
+    text-decoration: line-through;
+    color: #ff5e5e;
+    font-size: 11px;
+    margin-left: 4px;
+}
+
+.main-img {
+    width: 100%;
+    height: 160px;
+    object-fit: contain;
+    margin-top: 15px;
+}
+
+.status-tag {
+    background: #e8f5e9;
+    color: #2e7d32;
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    margin: 12px 0;
+    font-weight: 500;
+}
+
+.title {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 8px;
+    height: 40px;
+    overflow: hidden;
+}
+
+.buy-btn {
+    width: 100%;
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.2s;
+}
+
+.buy-btn:hover {
+    background: #333;
+}
+
+/* Pagination - The "Pill" design */
+.pagination-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.pill-nav {
+    background: #f0f2f5;
+    padding: 6px 20px;
+    border-radius: 40px;
+    /* აძლევს აბის ფორმას */
+    display: flex;
+    gap: 10px;
+    border: 1px solid #e0e0e0;
+}
+
+.num-btn {
+    border: none;
+    background: transparent;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: 600;
+    color: #555;
+}
+
+.num-btn.active {
+    background: #000;
+    color: #fff;
+}
+
+.num-btn:hover:not(.active) {
+    background: #e2e6ea;
+}
+
+.selector-box {
+    font-size: 13px;
+    color: #777;
+}
+
+.selector-box select {
+    padding: 3px 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}

@@ -1,0 +1,36 @@
+<header class="header">
+    <div>
+        <a routerLink="/">
+            <h1 class="headerh">Digital <span class="onespan">Store</span></h1>
+        </a>
+    </div>
+
+    <div class="search-box">
+        <div class="search-wrapper">
+            <input type="text" id="search" placeholder="Search products..." autocomplete="off">
+            <div id="search-dropdown" class="search-dropdown"></div>
+        </div>
+    </div>
+
+    <div class="header-right">
+        <nav class="nav">
+            <ul class="ul">
+                <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">main</a></li>
+                <li><a routerLink="/allproduct" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">allproduct</a></li>
+                <li><a routerLink="/login" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">login</a></li>
+                <li><a routerLink="/signup" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">signup</a></li>
+                <li><a routerLink="/profile" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">profile</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="hamburger" (click)="isMenuOpen = !isMenuOpen">
+        ☰
+    </div>
+    <div class="mobile-menu" [class.open]="isMenuOpen">
+        <a routerLink="/" (click)="isMenuOpen = false">main</a>
+        <a routerLink="/allproduct" (click)="isMenuOpen = false">allproduct</a>
+        <a routerLink="/login" (click)="isMenuOpen = false">login</a>
+        <a routerLink="/signup" (click)="isMenuOpen = false">signup</a>
+        <a routerLink="/profile" (click)="isMenuOpen = false">profile</a>
+    </div>
+</header>
