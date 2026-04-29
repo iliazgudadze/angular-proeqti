@@ -1,50 +1,119 @@
 <div class="shop-wrapper">
-    <div class="products-container">
-        @for (item of allProducts; track item._id) {
-        <div class="card-item">
-            <div class="badge-price">
-                {{ item.price.current }}$
-                @if (item.price.beforeDiscount) {
-                <span class="discount">
-                    {{ item.price.beforeDiscount }}$
-                </span>
-                }
-            </div>
-            <img [src]="item.thumbnail" class="main-img" referrerpolicy="no-referrer">
 
-            <div class="status-tag">
-                In Stock: {{ item.stock }}
-            </div>
+    <aside class="filter-sidebar">
 
-            <h4 class="title">
-                {{ item.title }}
-            </h4>
-
-            <div class="rating">
-                {{ '⭐'.repeat(item.rating) }}
-            </div>
-
-            <button class="buy-btn">
-                ADD TO CART
-            </button>
+        <div class="breadcrumb">
+            <a routerLink="/"><span class="breadcrumb-home">Home</span></a>
+            <span class="breadcrumb-sep">›</span>
+            <a routerLink="/cart"><span class="breadcrumb-current">Cart 🛒</span></a>
         </div>
-        }
-    </div>
-    <div class="pagination-footer">
-        <div class="pill-nav">
-            @for (page of getPages(); track page) {
-            <button class="num-btn" [class.active]="page === currentPage" (click)="loadProducts(page)">
-                {{ page }}
+
+        <div class="filter-header">
+            <span class="filter-title">Browse by</span>
+        </div>
+
+        <div class="filter-group" [class.open]="openSections['category']">
+            <button class="filter-toggle" (click)="toggleSection('category')">
+                <span>Category</span>
+                <span class="toggle-icon">{{ openSections['category'] ? '−' : '+' }}</span>
             </button>
+            <div class="filter-body">
+                <button
+                    class="filter-chip"
+                    *ngFor="let cat of categories"
+                    [class.active]="selectedCategoryId === cat.id.toString()"
+                    (click)="selectCategory(cat.id.toString())">
+                    {{ cat.name }}
+                </button>
+            </div>
+        </div>
+
+        <div class="filter-group" [class.open]="openSections['brand']">
+            <button class="filter-toggle" (click)="toggleSection('brand')">
+                <span>Brand</span>
+                <span class="toggle-icon">{{ openSections['brand'] ? '−' : '+' }}</span>
+            </button>
+            <div class="filter-body">
+                <button
+                    class="filter-chip"
+                    *ngFor="let brand of brands"
+                    [class.active]="selectedBrand === brand"
+                    (click)="selectBrand(brand)">
+                    {{ brand }}
+                </button>
+            </div>
+        </div>
+
+        <div class="filter-group" [class.open]="openSections['rating']">
+            <button class="filter-toggle" (click)="toggleSection('rating')">
+                <span>Rating</span>
+                <span class="toggle-icon">{{ openSections['rating'] ? '−' : '+' }}</span>
+            </button>
+            <div class="filter-body">
+                <button
+                    class="filter-chip"
+                    *ngFor="let r of [5,4,3,2,1]"
+                    [class.active]="selectedRating === r"
+                    (click)="selectedRating = selectedRating === r ? null : r; applyClientFilters()">
+                    {{ '⭐'.repeat(r) }}
+                </button>
+            </div>
+        </div>
+
+        <div class="filter-group" [class.open]="openSections['price']">
+            <button class="filter-toggle" (click)="toggleSection('price')">
+                <span>Price</span>
+                <span class="toggle-icon">{{ openSections['price'] ? '−' : '+' }}</span>
+            </button>
+            <div class="filter-body">
+                <div class="price-range">
+                    <span>$0 – ${{ maxPrice }}</span>
+                    <input type="range" min="0" max="2000" step="50"
+                        [(ngModel)]="maxPrice"
+                        (ngModelChange)="applyClientFilters()">
+                </div>
+            </div>
+        </div>
+
+        <button class="get-all-btn" (click)="resetFilters()">
+            GET ALL <span>↩</span>
+        </button>
+    </aside>
+
+    <div class="main-content">
+        <div class="products-container">
+            @for (item of allProducts; track item._id) {
+            <div class="card-item">
+                <div class="badge-price">
+                    {{ item.price.current }}$
+                    @if (item.price.beforeDiscount) {
+                    <span class="discount">{{ item.price.beforeDiscount }}$</span>
+                    }
+                </div>
+                <img [src]="item.thumbnail" class="main-img" referrerpolicy="no-referrer">
+                <div class="status-tag">In Stock: {{ item.stock }}</div>
+                <h4 class="title">{{ item.title }}</h4>
+                <div class="rating">{{ '⭐'.repeat(item.rating) }}</div>
+                <button class="buy-btn">ADD TO CART</button>
+            </div>
             }
         </div>
-        <div class="selector-box">
-            <span>Items per Page:</span>
-            <select [(ngModel)]="limit" (change)="onLimitChange()">
-                <option [value]="9">9</option>
-                <option [value]="18">18</option>
-            </select>
-        </div>
 
+        <div class="pagination-footer">
+            <div class="pill-nav">
+                @for (page of getPages(); track page) {
+                <button class="num-btn" [class.active]="page === currentPage" (click)="loadProducts(page)">
+                    {{ page }}
+                </button>
+                }
+            </div>
+            <div class="selector-box">
+                <span>Items per Page:</span>
+                <select [(ngModel)]="limit" (ngModelChange)="onLimitChange($event)">
+                    <option [ngValue]="9">9</option>
+                    <option [ngValue]="18">18</option>
+                </select>
+            </div>
+        </div>
     </div>
 </div>

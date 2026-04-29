@@ -39,9 +39,7 @@ export class Main implements OnInit, OnDestroy {
 
   startSlider(): void {
     this.interval = setInterval(() => {
-      this.currentImage =
-        (this.currentImage + 1) % this.images.length;
-
+      this.currentImage = (this.currentImage + 1) % this.images.length;
       this.cdr.detectChanges();
     }, 4000);
   }

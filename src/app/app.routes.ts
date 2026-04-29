@@ -5,6 +5,7 @@ import { Login } from './components/login/login';
 import { Signup } from './components/signup/signup';
 import { Profile } from './components/profile/profile';
 import { Errorpage } from './components/errorpage/errorpage';
+import { Cart } from './components/cart/cart';
 
 export const routes: Routes = [
     {
@@ -26,6 +27,10 @@ export const routes: Routes = [
     {
         path:"profile",
         component:Profile
+    },
+    {
+        path:"cart",
+        component:Cart
     },
     {
         path:"**",
